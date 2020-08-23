@@ -1,0 +1,36 @@
+<mat-card>
+    <form (submit)="onAddContact(contactForm)" #contactForm="ngForm">
+        <mat-form-field>
+            <input matInput type="text" name="firstName" placeholder="first name" ngModel required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="text" name="lastName" placeholder="last name" ngModel required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="text" name="jobTitle" placeholder="job title" ngModel required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="text" name="phoneNumber" placeholder="phone number" ngModel required>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="text" name="streetAddress" placeholder="street address" ngModel required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="text" name="city" placeholder="city" ngModel required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="text" name="state" placeholder="state" ngModel required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="text" name="zipCode" placeholder="zip code" ngModel required>
+        </mat-form-field>
+        <button type="submit">save contact!</button>
+    </form>
+
+</mat-card>

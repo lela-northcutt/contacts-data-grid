@@ -1,0 +1,9 @@
+<button (click)="getSelectedRows()">Get Selected Rows</button>
+
+<ag-grid-angular #agGrid style="width: 1700px; height: 500px;" class="ag-theme-balham" [rowData]="rowData"
+    [columnDefs]="columnDefs" rowSelection="multiple">
+</ag-grid-angular>
+
+<!-- <mat-action-row>
+    <button mat-button color="primary" (click)="nextStep()">Next</button>
+</mat-action-row> -->
