@@ -10,7 +10,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import "ag-grid-enterprise"
 
 import { AppComponent } from './app.component';
-import { ContactCreateComponent } from './contacts/contact-create/contact-create.component';
+// import { ContactCreateComponent } from './contacts/contact-create/contact-create.component';
 import { ContactListComponent } from './contacts/contact-list/contact-list.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { ContactsService } from './contacts/contacts.service';
@@ -19,7 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
-    ContactCreateComponent,
+    // ContactCreateComponent,
     ContactListComponent
   ],
   imports: [

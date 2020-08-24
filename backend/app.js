@@ -3,11 +3,11 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Contact = require('./models/contact');
 
+// this was used for seeding the database
 // const faker = require("faker");
 // const MongoClient = require("mongodb").MongoClient;
 // const assert = require("assert");
 // const _ = require("lodash");
-
 // const { detectBufferEncoding } = require('tslint/lib/utils');
 
 const app = express();
@@ -29,22 +29,22 @@ app.use((req, res, next) => {
     next();
 });
 
-app.post('/api/contacts', (req, res, next) => {
-    const contact = new Contact({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        occupation: req.body.occupation,
-        phoneNumber: req.body.phoneNumber,
-        streetAddress: req.body.streetAddress,
-        city: req.body.city,
-        state: req.body.state,
-        zipCode: req.body.zipCode,
-    });
-    contact.save();
-    res.status(201).json({
-        message: 'contacts added successfully'
-    });
-});
+// app.post('/api/contacts', (req, res, next) => {
+//     const contact = new Contact({
+//         firstName: req.body.firstName,
+//         lastName: req.body.lastName,
+//         occupation: req.body.occupation,
+//         phoneNumber: req.body.phoneNumber,
+//         streetAddress: req.body.streetAddress,
+//         city: req.body.city,
+//         state: req.body.state,
+//         zipCode: req.body.zipCode,
+//     });
+//     contact.save();
+//     res.status(201).json({
+//         message: 'contacts added successfully'
+//     });
+// });
 
 app.get('/api/contacts', (req, res, next) => {
     Contact.find()
@@ -54,14 +54,9 @@ app.get('/api/contacts', (req, res, next) => {
                 contacts: documents
             });
         });
-
 });
 
-
-
-
-///////////////////////////////////////////
-
+// this was used for seeding the database
 
 // // Connection URL
 // const url = "mongodb+srv://lela:Ws0GSob8JShrseYQ@cluster0.wdzc0.mongodb.net/myContacts?retryWrites=true&w=majority";
@@ -101,6 +96,5 @@ app.get('/api/contacts', (req, res, next) => {
 //     console.log("Database seeded! :)");
 //     client.close();
 // });
-///////////////////////////////////////////////////////////////////////////////////////
 
 module.exports = app;
