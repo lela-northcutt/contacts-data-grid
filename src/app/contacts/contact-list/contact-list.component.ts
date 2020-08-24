@@ -18,7 +18,8 @@ export class ContactListComponent implements OnInit, OnDestroy {
             flex: 1,
             minWidth: 100,
             sortable: true,
-            resizable: true
+            resizable: true,
+            filter: false
         },
         autoGroupColumnDef: {
             minWidth: 200
@@ -48,6 +49,7 @@ export class ContactListComponent implements OnInit, OnDestroy {
 
     onSearchContacts(search) {
         this.gridApi.setQuickFilter(search.target.value);
+        this.gridApi.filter(false);
     }
 
     toggleGrouping() {
@@ -58,25 +60,25 @@ export class ContactListComponent implements OnInit, OnDestroy {
     setColumnDefs() {
         if (this.enableGrouping) {
             this.columnDefs = [
-                { headerName: "First Name", field: "firstName" },
-                { headerName: "Last Name", field: "lastName" },
-                { headerName: "Occupation", field: "occupation", rowGroup: true, hide: true },
-                { headerName: "Phone Number", field: "phoneNumber" },
-                { headerName: "Street Address", field: "streetAddress" },
-                { headerName: "City", field: "city" },
-                { headerName: "State", field: "state", rowGroup: true, hide: true },
-                { headerName: "Zip Code", field: "zipCode" },
+                { field: "firstName" },
+                { field: "lastName" },
+                { field: "occupation", rowGroup: true, hide: true },
+                { field: "phoneNumber" },
+                { field: "streetAddress" },
+                { field: "city" },
+                { field: "state", rowGroup: true, hide: true },
+                { field: "zipCode" },
             ];
         } else {
             this.columnDefs = [
-                { headerName: "First Name", field: "firstName" },
-                { headerName: "Last Name", field: "lastName" },
-                { headerName: "Occupation", field: "occupation" },
-                { headerName: "Phone Number", field: "phoneNumber" },
-                { headerName: "Street Address", field: "streetAddress" },
-                { headerName: "City", field: "city" },
-                { headerName: "State", field: "state" },
-                { headerName: "Zip Code", field: "zipCode" },
+                { field: "firstName" },
+                { field: "lastName" },
+                { field: "occupation" },
+                { field: "phoneNumber" },
+                { field: "streetAddress" },
+                { field: "city" },
+                { field: "state" },
+                { field: "zipCode" },
             ];
         }
     }
