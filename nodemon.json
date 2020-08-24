@@ -1,0 +1,5 @@
+{
+    "env": {
+        "MONGO_ATLAS_URL": "mongodb+srv://lela:Ws0GSob8JShrseYQ@cluster0.wdzc0.mongodb.net/myContacts?retryWrites=true&w=majority"
+    }
+}

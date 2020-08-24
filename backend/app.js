@@ -3,21 +3,14 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Contact = require('./models/contact');
 
-// this was used for seeding the database
-// const faker = require("faker");
-// const MongoClient = require("mongodb").MongoClient;
-// const assert = require("assert");
-// const _ = require("lodash");
-// const { detectBufferEncoding } = require('tslint/lib/utils');
-
 const app = express();
 
-mongoose.connect('mongodb+srv://lela:Ws0GSob8JShrseYQ@cluster0.wdzc0.mongodb.net/myContacts?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGO_ATLAS_URL)
     .then(() => {
-        console.log('connected to database!!!!')
+        console.log('connected to database')
     })
     .catch(() => {
-        console.log('connection failed!!!!!')
+        console.log('database connection failed')
     })
 
 app.use(bodyParser.json());
@@ -55,46 +48,5 @@ app.get('/api/contacts', (req, res, next) => {
             });
         });
 });
-
-// this was used for seeding the database
-
-// // Connection URL
-// const url = "mongodb+srv://lela:Ws0GSob8JShrseYQ@cluster0.wdzc0.mongodb.net/myContacts?retryWrites=true&w=majority";
-
-// // Database Name
-// const dbName = "myContacts";
-
-// // Use connect method to connect to the server
-// MongoClient.connect(url, function (err, client) {
-//     assert.equal(null, err);
-
-//     const db = client.db(dbName);
-
-//     // get access to the relevant collections
-//     const contactsCollection = db.collection("contacts");
-//     // make a bunch of users
-//     let contacts = [];
-//     for (let i = 0; i < 10; i += 1) {
-//         person = {
-//             firstName: faker.name.firstName(),
-//             lastName: faker.name.lastName(),
-//             occupation: faker.name.jobTitle(),
-//             phoneNumber: faker.phone.phoneNumber(),
-//             streetAddress: faker.address.streetAddress(),
-//             city: faker.address.city(),
-//             state: faker.address.state(),
-//             zipCode: faker.address.zipCode()
-//         }
-//         contacts.push(person);
-
-//         // visual feedback always feels nice!
-//         console.log(person.firstName);
-//     }
-//     contactsCollection.insertMany(contacts);
-
-
-//     console.log("Database seeded! :)");
-//     client.close();
-// });
 
 module.exports = app;
