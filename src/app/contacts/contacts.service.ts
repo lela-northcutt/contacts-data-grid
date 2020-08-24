@@ -2,6 +2,7 @@ import { Contact } from './contact.model';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: "root" })
 export class ContactsService {
@@ -11,7 +12,7 @@ export class ContactsService {
     constructor(private http: HttpClient) { }
 
     getContacts() {
-        this.http.get<{ message: string, contacts: Contact[] }>('http://localhost:3000/api/contacts')
+        this.http.get<{ message: string, contacts: Contact[] }>(environment.apiUrl)
             .subscribe((contactData) => {
                 this.contacts = contactData.contacts;
                 this.contactsUpdated.next([...this.contacts]);
