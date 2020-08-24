@@ -1,7 +1,8 @@
 export interface Contact {
+    id: string;
     firstName: string;
     lastName: string;
-    jobTitle: string;
+    occupation: string;
     phoneNumber: string;
     streetAddress: string;
     city: string;

@@ -13,7 +13,7 @@ export class ContactCreateComponent {
 
     firstName = '';
     lastName = '';
-    jobTitle = '';
+    occupation = '';
     phoneNumber = '';
     streetAddress = '';
     city = '';
@@ -24,9 +24,10 @@ export class ContactCreateComponent {
 
     onAddContact(form: NgForm) {
         const contact: Contact = {
+            id: null,
             firstName: form.value.firstName,
             lastName: form.value.lastName,
-            jobTitle: form.value.jobTitle,
+            occupation: form.value.occupation,
             phoneNumber: form.value.phoneNumber,
             streetAddress: form.value.streetAddress,
             city: form.value.city,

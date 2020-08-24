@@ -1,9 +1,24 @@
-<button (click)="getSelectedRows()">Get Selected Rows</button>
+<!DOCTYPE html>
+<html lang="en">
 
-<ag-grid-angular #agGrid style="width: 1700px; height: 500px;" class="ag-theme-balham" [rowData]="rowData"
-    [columnDefs]="columnDefs" rowSelection="multiple">
-</ag-grid-angular>
+<body>
+    <div class="topNav">
+        <div class="topNavLeft">
+            <mat-form-field>
+                <input matInput type="text" name="searchInput" placeholder="search contacts"
+                    (keyup)="onSearchContacts($event)">
+            </mat-form-field>
+        </div>
 
-<!-- <mat-action-row>
-    <button mat-button color="primary" (click)="nextStep()">Next</button>
-</mat-action-row> -->
+        <div class="topNavRight">
+            <label>grouping</label>
+            <mat-slide-toggle (click)="toggleGrouping()"></mat-slide-toggle>
+        </div>
+    </div>
+
+    <ag-grid-angular id="myGrid" style="height: 100%; width: 100%;" class="ag-theme-balham" [rowData]="rowData"
+        [columnDefs]="columnDefs" [gridOptions]="gridOptions" rowSelection="multiple" (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+</body>
+
+</html>

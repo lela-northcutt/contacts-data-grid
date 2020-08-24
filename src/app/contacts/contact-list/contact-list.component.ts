@@ -1,70 +1,83 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AgGridAngular } from 'ag-grid-angular';
-
 import { Contact } from '../contact.model';
 import { ContactsService } from '../contacts.service';
-
 @Component({
     selector: 'app-contact-list',
-    templateUrl: './contact-list.component.html'
+    templateUrl: './contact-list.component.html',
+    styleUrls: ['./contact-list.component.css']
 })
 export class ContactListComponent implements OnInit, OnDestroy {
-    @ViewChild('agGrid', { static: false }) agGrid: AgGridAngular;
-
-    // title = 'data-grid';
-    columnDefs = [
-        { headerName: "First Name", field: "firstName", sortable: true, filter: true },
-        { headerName: "Last Name", field: "lastName", sortable: true, filter: true },
-        { headerName: "Job Title", field: "jobTitle", sortable: true, filter: true },
-        { headerName: "Phone Number", field: "phoneNumber", sortable: true, filter: true },
-        { headerName: "Street Address", field: "streetAddress", sortable: true, filter: true },
-        { headerName: "City", field: "city", sortable: true, filter: true },
-        { headerName: "State", field: "state", sortable: true, filter: true },
-        { headerName: "Zip Code", field: "zipCode", sortable: true, filter: true },
-    ];
-
-    rowData: Contact[] = [];
+    private gridApi;
     private contactsSub: Subscription;
-
-    // autoGroupColumnDef = {
-    //     headerName: 'Job Title',
-    //     field: 'jobTitle',
-    //     cellRenderer: 'agGroupCellRenderer',
-    //     cellRendererParams: {
-    //         checkbox: true
-    //     }
-    // }
-
-    // rowData = [
-    //     { firstName: 'Lela', lastName: 'Northcutt', jobTitle: 'softeware dev', phoneNumber: '(404) 358-8062', streetAddress: 'rankin oaks', city: 'charlotte', state: 'NC', zipCode: '28213' },
-    //     { firstName: 'Marshall', lastName: 'Northcutt', jobTitle: 'author', phoneNumber: '(704) 123-1234', streetAddress: 'rankin oaks', city: 'charlotte', state: 'NC', zipCode: '28213' },
-    //     { firstName: 'Ella', lastName: 'Boroday', jobTitle: 'mom', phoneNumber: '(404) 345-2345', streetAddress: 'stream cut dr', city: 'lyman', state: 'SC', zipCode: '12345' },
-    //     { firstName: 'Stephan', lastName: 'Boroday', jobTitle: 'builder', phoneNumber: '(404) 567-1234', streetAddress: 'stream cut dr', city: 'lyman', state: 'SC', zipCode: '12345' },
-    //     { firstName: 'Dennis', lastName: 'Krasnyanskiy', jobTitle: 'builder', phoneNumber: '(404) 678-3456', streetAddress: 'somewhere', city: 'everywhere', state: 'NC', zipCode: '28213' },
-
-    // ];
+    enableGrouping: boolean = false;
+    rowData: Contact[] = [];
+    columnDefs = [];
+    gridOptions = {
+        defaultColDef: {
+            flex: 1,
+            minWidth: 100,
+            sortable: true,
+            resizable: true
+        },
+        autoGroupColumnDef: {
+            minWidth: 200
+        },
+        groupMultiAutoColumn: true,
+        animateRows: true
+    };
 
     constructor(public contactsService: ContactsService) { }
 
     ngOnInit() {
-        this.rowData = this.contactsService.getContacts();
+        this.contactsService.getContacts();
         this.contactsSub = this.contactsService.getContactsUpdateListener()
             .subscribe((contacts: Contact[]) => {
                 this.rowData = contacts;
             });
+        this.setColumnDefs();
     }
 
     ngOnDestroy() {
         this.contactsSub.unsubscribe();
     }
 
-    getSelectedRows() {
-        const selectedNodes = this.agGrid.api.getSelectedNodes();
-        const selectedData = selectedNodes.map(node => node.data);
-        const selectedDataStringPresentation = selectedData
-            .map(node => node.firstName + " " + node.lastName)
-            .join(", ");
-        alert(`Selected Nodes: ${selectedDataStringPresentation}`);
+    onGridReady(params) {
+        this.gridApi = params.api
+    }
+
+    onSearchContacts(search) {
+        this.gridApi.setQuickFilter(search.target.value);
+    }
+
+    toggleGrouping() {
+        this.enableGrouping = !this.enableGrouping;
+        this.setColumnDefs();
+    }
+
+    setColumnDefs() {
+        if (this.enableGrouping) {
+            this.columnDefs = [
+                { headerName: "First Name", field: "firstName" },
+                { headerName: "Last Name", field: "lastName" },
+                { headerName: "Occupation", field: "occupation", rowGroup: true, hide: true },
+                { headerName: "Phone Number", field: "phoneNumber" },
+                { headerName: "Street Address", field: "streetAddress" },
+                { headerName: "City", field: "city" },
+                { headerName: "State", field: "state", rowGroup: true, hide: true },
+                { headerName: "Zip Code", field: "zipCode" },
+            ];
+        } else {
+            this.columnDefs = [
+                { headerName: "First Name", field: "firstName" },
+                { headerName: "Last Name", field: "lastName" },
+                { headerName: "Occupation", field: "occupation" },
+                { headerName: "Phone Number", field: "phoneNumber" },
+                { headerName: "Street Address", field: "streetAddress" },
+                { headerName: "City", field: "city" },
+                { headerName: "State", field: "state" },
+                { headerName: "Zip Code", field: "zipCode" },
+            ];
+        }
     }
 }
